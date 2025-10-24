@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cortador de Vídeos 60s (Offline)</title>
+    
+    <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin">
+    <meta http-equiv="Cross-Origin-Embedder-Policy" content="require-corp">
+    
+    <link rel="stylesheet" href="style.css"> 
+    
+    <script type="module">
+        // Importa e expõe as classes para o app.js usar
+        import { FFmpeg } from 'https://unpkg.com/@ffmpeg/ffmpeg@0.12.7/dist/ffmpeg.js';
+        import { toBlobURL } from 'https://unpkg.com/@ffmpeg/util@0.12.1/dist/util.js';
+        
+        window.FFmpeg = FFmpeg;
+        window.toBlobURL = toBlobURL;
+
+        // Chama o script principal após a importação
+        const script = document.createElement('script');
+        script.src = 'app.js';
+        document.body.appendChild(script);
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Cortador Automático de Vídeos para 60 Segundos (Offline)</h1>
+        <p>Selecione um vídeo. Ele será processado 100% no seu navegador e dividido em clipes rápidos de 60 segundos.</p>
+
+        <input type="file" id="video-input" accept="video/*">
+        
+        <button id="cut-button" disabled>Iniciar Corte (60s)</button>
+
+        <div id="progress-area" class="hidden">
+            <h2>Processando...</h2>
+            <p id="status-message">Aguarde, carregando o motor de corte...</p> 
+            <progress id="progress-bar" value="0" max="100"></progress>
+        </div>
+
+        <div id="download-area" class="hidden">
+            <h2>Pronto!</h2>
+            <p>Seus clipes estão prontos para download. Clique nos links:</p>
+            <div id="clip-list">
+            </div>
+        </div>
+        
+        <div id="error-area" class="hidden">
+            <h2>⚠️ Erro</h2>
+            <p id="error-message"></p>
+        </div>
+    </div>
+    </body>
+</html>
